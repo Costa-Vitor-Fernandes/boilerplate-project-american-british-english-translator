@@ -157,10 +157,11 @@ class Translator {
        }
     }
     translate(inputText, locale){
+        let possibleLocales = ['american-to-british', 'british-to-american']
         if(!inputText){
             return { error: 'No text to translate' }
         }
-        if(!locale){
+        if(!possibleLocales.includes(locale) || !locale){
             return { error: 'Invalid value for locale field' }
         }
         let splitText = this.spliter(inputText)
