@@ -7,9 +7,9 @@ const translator = new Translator();
 suite("Unit Tests", () => {
   test("Translate Mangoes are my favorite fruit. to British English", function () {
     assert.equal(
-      "Mangoes are my favourite fruit",
+      "Mangoes are my favourite fruit.",
       translator.translate(
-        "Mangoes are my favorite fruit",
+        "Mangoes are my favorite fruit.",
         "american-to-british"
       )
     );
@@ -22,13 +22,12 @@ suite("Unit Tests", () => {
     );
   });
   test("Highlight translation in Mangoes are my favorite fruit.  to British English", () => {
-    assert.equal(
-      'Mangoes are my <span class="highlight">favourite</span> fruit.',
-      translator.translateAndColor(
-        "Mangoes are my favorite fruit.",
-        "american-to-british"
-      )
-    );
+    let locale = "american-to-british"
+    let originalText = 'Mangoes are my favorite fruit.'
+    let expectedText = 'Mangoes are my <span class="highlight">favourite</span> fruit.' 
+    assert.equal(expectedText, translator.testTranslateAndColor(originalText, locale))
+
+
   });
   test("Translate Tea time is usually around 4 or 4.30. to American English", function () {
     assert.equal(
@@ -69,7 +68,7 @@ suite("Unit Tests", () => {
   test("Highlight translation in I ate yogurt for breakfast.", () => {
     assert.equal(
       'I ate <span class="highlight">yoghurt</span> for breakfast.',
-      translator.translateAndColor(
+      translator.testTranslateAndColor(
         "I ate yogurt for breakfast.",
         "american-to-british"
       )
@@ -139,7 +138,7 @@ suite("Unit Tests", () => {
   test("Highlight translation in We watched the footie match for a while.", () => {
     assert.equal(
       'We watched the <span class="highlight">soccer</span> match for a while.',
-      translator.translateAndColor(
+      translator.testTranslateAndColor(
         "We watched the footie match for a while.",
         "british-to-american"
       )
@@ -157,7 +156,7 @@ suite("Unit Tests", () => {
   test("Highlight translation in Paracetamol takes up to an hour to work.", () => {
     assert.equal(
       '<span class="highlight">Tylenol</span> takes up to an hour to work.',
-      translator.translateAndColor(
+      translator.testTranslateAndColor(
         "Paracetamol takes up to an hour to work.",
         "british-to-american"
       )
