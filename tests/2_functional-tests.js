@@ -17,7 +17,7 @@ suite('Functional Tests', () => {
           .send({text: 'abseil', locale:'british-to-american'})
           .end(function (err, res) {
             assert.equal(res.status, 200);
-            console.log(res.body, 'log of the response body')
+            // console.log(res.body, 'esponse body')
             assert.equal(res.body.translation, '<span class="highlight">rappel</span>' )
             done();
           });
@@ -31,7 +31,7 @@ suite('Functional Tests', () => {
           .send({text: 'abseil', locale:'british'})
           .end(function (err, res) {
             assert.equal(res.status, 200);
-            console.log(res.body, 'log of the response body')
+            // console.log(res.body, 'response body')
             assert.equal(res.body.error, 'Invalid value for locale field' )
             done();
           });
@@ -45,7 +45,7 @@ suite('Functional Tests', () => {
           .send({locale:'british-to-american'})
           .end(function (err, res) {
             assert.equal(res.status, 200);
-            console.log(res.body, 'log of the response body')
+            // console.log(res.body, 'response body')
             assert.equal(res.body.error, 'Required field(s) missing' )
             done();
           });
@@ -59,7 +59,7 @@ suite('Functional Tests', () => {
           .send({text: 'abseil'})
           .end(function (err, res) {
             assert.equal(res.status, 200);
-            console.log(res.body, 'log of the response body')
+            // console.log(res.body, 'response body')
             assert.equal(res.body.error, 'Invalid value for locale field' )
             done();
           });
@@ -74,7 +74,7 @@ suite('Functional Tests', () => {
           .send({text: '', locale:'american-to-british'})
           .end(function (err, res) {
             assert.equal(res.status, 200);
-            console.log(res.body, 'log of the response body')
+            // console.log(res.body, 'response body')
             assert.equal(res.body.error, 'No text to translate' )
             done();
           });
@@ -88,23 +88,10 @@ suite('Functional Tests', () => {
                   .send({text: 'i have a ball', locale:'american-to-british'})
                   .end(function (err, res) {
                     assert.equal(res.status, 200);
-                    console.log(res.body, 'log of the response body')
+                    // console.log(res.body, 'response body')
                     assert.equal(res.body.translation, 'Everything looks good to me!' )
                     done();
                   });
               });
-              //7
-              // test('Required fields missing', function (done) {
-              //   chai
-              //     .request(server)
-              //     .post('/api/translate')
-              //     .set('content-type', 'application/json')
-              //     .send({a:'a'})
-              //     .end(function (err, res) {
-              //       assert.equal(res.status, 200);
-              //       console.log(res.body, 'log of the response body')
-              //       done();
-              //     });
-              // });
 });
 
