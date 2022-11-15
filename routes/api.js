@@ -9,7 +9,6 @@ module.exports = function (app) {
   app.route('/api/translate')
     .post((req, res) => {
       let result = translator.translateAndColor(req.body.text, req.body.locale);
-      console.log(result,' result on api')
       res.send(result)
     });
 };
