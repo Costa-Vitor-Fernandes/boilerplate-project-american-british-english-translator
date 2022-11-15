@@ -158,11 +158,14 @@ class Translator {
     }
     translate(inputText, locale){
         let possibleLocales = ['american-to-british', 'british-to-american']
-        if(!inputText){
+        if(!inputText || inputText === ""){
             return { error: 'No text to translate' }
         }
         if(!possibleLocales.includes(locale) || !locale){
             return { error: 'Invalid value for locale field' }
+        }
+        if(!locale && !inputText){
+            return  { error: 'Required field(s) missing' }  
         }
         let splitText = this.spliter(inputText)
         let splitWordsByPunctuation = this.splitWordsByPunctuation(splitText)
@@ -185,17 +188,21 @@ class Translator {
         if(translatedText === inputText){
             return "Everything looks good to me!"
         }   
-        return translatedText
+        return {text: inputText, translation: translatedText}
 
 
 
     }
     translateAndColor(inputText,locale){
-        if(!inputText){
+        let possibleLocales = ['american-to-british', 'british-to-american']
+        if(!inputText || inputText === ""){
             return { error: 'No text to translate' }
         }
-        if(!locale){
+        if(!possibleLocales.includes(locale) || !locale){
             return { error: 'Invalid value for locale field' }
+        }
+        if(!locale || !inputText){
+            return  { error: 'Required field(s) missing' }  
         }
         let splitText = this.spliter(inputText)
         let splitWordsByPunctuation = this.splitWordsByPunctuation(splitText)
@@ -216,9 +223,10 @@ class Translator {
         
 
         if(translatedText === inputText){
-            return "Everything looks good to me!"
+            return {translation:"Everything looks good to me!"}
         }   
-        return translatedText
+        return {text: inputText, translation: translatedText}
+
 
 
     }

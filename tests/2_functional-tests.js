@@ -18,7 +18,7 @@ suite('Functional Tests', () => {
           .end(function (err, res) {
             assert.equal(res.status, 200);
             console.log(res.body, 'log of the response body')
-            assert.equal(res.body.translation, 'rappel' )
+            assert.equal(res.body.translation, '<span class="highlight">rappel</span>' )
             done();
           });
       });
@@ -32,7 +32,7 @@ suite('Functional Tests', () => {
           .end(function (err, res) {
             assert.equal(res.status, 200);
             console.log(res.body, 'log of the response body')
-            assert.equal(res.body.translation.error, 'Invalid value for locale field' )
+            assert.equal(res.body.error, 'Invalid value for locale field' )
             done();
           });
       });
@@ -46,7 +46,7 @@ suite('Functional Tests', () => {
           .end(function (err, res) {
             assert.equal(res.status, 200);
             console.log(res.body, 'log of the response body')
-            assert.equal(res.body.translation.error, 'No text to translate' )
+            assert.equal(res.body.error, 'No text to translate' )
             done();
           });
       });
@@ -60,7 +60,7 @@ suite('Functional Tests', () => {
           .end(function (err, res) {
             assert.equal(res.status, 200);
             console.log(res.body, 'log of the response body')
-            assert.equal(res.body.translation.error, 'Invalid value for locale field' )
+            assert.equal(res.body.error, 'Invalid value for locale field' )
             done();
           });
       });
@@ -75,7 +75,7 @@ suite('Functional Tests', () => {
           .end(function (err, res) {
             assert.equal(res.status, 200);
             console.log(res.body, 'log of the response body')
-            assert.equal(res.body.translation.error, 'No text to translate' )
+            assert.equal(res.body.error, 'No text to translate' )
             done();
           });
       });
@@ -90,6 +90,20 @@ suite('Functional Tests', () => {
                     assert.equal(res.status, 200);
                     console.log(res.body, 'log of the response body')
                     assert.equal(res.body.translation, 'Everything looks good to me!' )
+                    done();
+                  });
+              });
+              //7
+              test('Required fields missing', function (done) {
+                chai
+                  .request(server)
+                  .post('/api/translate')
+                  .set('content-type', 'application/json')
+                  .send({a:'a'})
+                  .end(function (err, res) {
+                    assert.equal(res.status, 200);
+                    console.log(res.body, 'log of the response body')
+                    // assert.equal(res.body.translation, 'Everything looks good to me!' )
                     done();
                   });
               });
