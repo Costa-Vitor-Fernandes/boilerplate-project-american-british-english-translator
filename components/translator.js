@@ -13,10 +13,10 @@ class Translator {
         this.colorizer  = this.colorizer.bind(this)
         this.wordChecker = this.wordChecker.bind(this)
         this.translate = this.translate.bind(this)
-        this.timeChecker = this.timeChecker.bind(this)
         this.splitWordsByPunctuation = this.splitWordsByPunctuation.bind(this)
         this.translateAndColor = this.translateAndColor.bind(this)
         this.timeTranslate = this.timeTranslate.bind(this)
+        this.testTranslateAndColor = this.testTranslateAndColor.bind(this)
     }
 
     getLocaleObjs(locale) {
@@ -126,23 +126,9 @@ class Translator {
         // }
         
     }
-    titlesTranslator(title){
-    }
     colorizer(text){
         let result = `<span class="highlight">${text}</span>`
         return result
-    }
-    timeChecker(splitText, locale){
-        splitText.map((v,i,arr)=>{
-            let regex = /\d\.?\:?/gm
-            let found = v.match(regex)
-            if(found){
-                console.log('a time here:',found.join(''))
-                //TODO: this should be a time, and should be converted
-                //use replace()
-            }
-        })
-
     }
     timeTranslate(time, locale){
         console.log('time translation original:', time)
@@ -153,9 +139,51 @@ class Translator {
         return (time.replace(":","."))
        }
        else{
-        return time
-       }
+           return time
+        }
     }
+    //actual answer to api
+    translateAndColor(inputText,locale){
+        let possibleLocales = ['american-to-british', 'british-to-american']
+        if(!inputText || inputText === ""|| inputText === undefined){
+            if(!locale || locale==="" || locale === undefined){
+                return  { error: 'Required field(s) missing' } 
+            }
+            if(inputText === "") return { error: 'No text to translate' }
+        }
+        if(!possibleLocales.includes(locale) || !locale){
+            return { error: 'Invalid value for locale field' }
+        }
+        if(!locale || !inputText || locale === undefined || inputText === undefined){
+            return  { error: 'Required field(s) missing' }  
+        }
+        let splitText = this.spliter(inputText)
+        let splitWordsByPunctuation = this.splitWordsByPunctuation(splitText)
+        let localeDic = this.getLocaleObjs(locale)
+        // let timeChecker = this.timeChecker(splitText)
+        // console.log(timeChecker)
+
+        let result = this.wordChecker(splitWordsByPunctuation,locale,localeDic)
+        console.log(result,'log of wordchecker')
+        let translatedText = inputText;
+
+        result.from.forEach((v,i,arr)=>{
+           translatedText = translatedText.replace(result.from[i],this.colorizer(result.to[i]))
+        //    translatedText = translatedText.replace(result.from[i],result.to[i])
+        })
+        console.log('translatedText:',translatedText, 'original text', inputText)
+        
+        
+
+        if(translatedText === inputText){
+            return {text:inputText ,translation:"Everything looks good to me!"}
+        }   
+        return {text: inputText, translation: translatedText}
+
+
+
+    }
+    //only for testing purposes
     translate(inputText, locale){
         let possibleLocales = ['american-to-british', 'british-to-american']
         if(!inputText || inputText === ""){
@@ -188,12 +216,13 @@ class Translator {
         if(translatedText === inputText){
             return "Everything looks good to me!"
         }   
-        return {text: inputText, translation: translatedText}
+        return translatedText
 
 
 
     }
-    translateAndColor(inputText,locale){
+    //only for testing purposes
+    testTranslateAndColor(inputText,locale){
         let possibleLocales = ['american-to-british', 'british-to-american']
         if(!inputText || inputText === ""){
             return { error: 'No text to translate' }
@@ -201,7 +230,7 @@ class Translator {
         if(!possibleLocales.includes(locale) || !locale){
             return { error: 'Invalid value for locale field' }
         }
-        if(!locale || !inputText){
+        if(!locale && !inputText){
             return  { error: 'Required field(s) missing' }  
         }
         let splitText = this.spliter(inputText)
@@ -223,13 +252,11 @@ class Translator {
         
 
         if(translatedText === inputText){
-            return {translation:"Everything looks good to me!"}
+            return "Everything looks good to me!"
         }   
-        return {text: inputText, translation: translatedText}
-
-
-
+        return translatedText
     }
+    //only for testing purposes
 }
 
 module.exports = Translator;

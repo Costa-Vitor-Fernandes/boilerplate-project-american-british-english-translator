@@ -46,7 +46,7 @@ suite('Functional Tests', () => {
           .end(function (err, res) {
             assert.equal(res.status, 200);
             console.log(res.body, 'log of the response body')
-            assert.equal(res.body.error, 'No text to translate' )
+            assert.equal(res.body.error, 'Required field(s) missing' )
             done();
           });
       });
@@ -94,18 +94,17 @@ suite('Functional Tests', () => {
                   });
               });
               //7
-              test('Required fields missing', function (done) {
-                chai
-                  .request(server)
-                  .post('/api/translate')
-                  .set('content-type', 'application/json')
-                  .send({a:'a'})
-                  .end(function (err, res) {
-                    assert.equal(res.status, 200);
-                    console.log(res.body, 'log of the response body')
-                    // assert.equal(res.body.translation, 'Everything looks good to me!' )
-                    done();
-                  });
-              });
+              // test('Required fields missing', function (done) {
+              //   chai
+              //     .request(server)
+              //     .post('/api/translate')
+              //     .set('content-type', 'application/json')
+              //     .send({a:'a'})
+              //     .end(function (err, res) {
+              //       assert.equal(res.status, 200);
+              //       console.log(res.body, 'log of the response body')
+              //       done();
+              //     });
+              // });
 });
 
